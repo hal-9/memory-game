@@ -25,11 +25,22 @@ function shuffle(array) {
     return array;
 }
 
-const cards = document.querySelectorAll('.card');
+let openCards = [];
+
+let cards = document.querySelectorAll('.card');
 
 for (let card of cards) {
+  console.log(openCards.length);
   card.addEventListener('click', function () {
-    card.classList.add('open', 'show');
+    if (openCards.length < 2) {
+      card.classList.add('open', 'show');
+      openCards.push(card);
+      console.log(openCards.length, openCards);
+    }
+    else {
+      console.log('else fired')
+      openCards = [];
+    }
   });
 }
 
