@@ -26,24 +26,50 @@ function shuffle(array) {
 }
 
 let openCards = [];
+// array where open cards are stored
 
-let cards = document.querySelectorAll('.card');
+const cards = document.querySelectorAll('.card');
+// all cards in a variable
 
 for (let card of cards) {
-  console.log(openCards.length);
   card.addEventListener('click', function () {
-    if (openCards.length < 2) {
-      card.classList.add('open', 'show');
+      // user has clicked on one of the cards
       openCards.push(card);
-      console.log(openCards.length, openCards);
-    }
-    else {
-      console.log('else fired')
-      openCards = [];
-    }
-  });
-}
+      card.classList.add('open', 'show');
+      // card was pushed in openCards array and card was opened
+      if (openCards.length === 2) {
+        // 2 cards are already opened
+        let firstCard = openCards[0].querySelector('i');
+        let secondCard = openCards[1].querySelector('i');
+        if (firstCard.classList.item(1) === secondCard.classList.item(1)) {
+          }
+          // both cards are matching, change to matched cards
+          // do all cards with card open and show tag contain contain the same
+          // i class?!
+        else {
+          // cards are NOT matching
+          setTimeout(function() {
+          // delay the closing of the cards
+          for (let openCard of openCards) {
+            console.log('else fired');
+            openCard.classList.remove('open', 'show')
+            openCards = [];
+            // close cards and empty array of openCards
+              }
+            }, 1000);
+          }
+        }
+        else {
 
+        }
+      });
+    };
+/*
+when player clicks a card => check if nr of open cards is less than 2
+  if true = open card - if false = close all open cards and empty array
+
+
+*/
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
