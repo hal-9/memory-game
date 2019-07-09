@@ -39,13 +39,15 @@ for (let card of cards) {
       // card was pushed in openCards array and card was opened
       if (openCards.length === 2) {
         // 2 cards are already opened
-        let firstCard = openCards[0].querySelector('i');
-        let secondCard = openCards[1].querySelector('i');
-        if (firstCard.classList.item(1) === secondCard.classList.item(1)) {
+        let firstCard = openCards[0].querySelector('i').classList.item(1);
+        let secondCard = openCards[1].querySelector('i').classList.item(1);
+        // card content put in a variable
+        if (firstCard === secondCard) {
+          // both cards match
+          openCards[0].classList.add('match');
+          openCards[1].classList.add('match');
           }
-          // both cards are matching, change to matched cards
-          // do all cards with card open and show tag contain contain the same
-          // i class?!
+
         else {
           // cards are NOT matching
           setTimeout(function() {
