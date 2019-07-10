@@ -34,13 +34,18 @@
  *   - add each card's HTML to the page
  */
 
+
+let idCounter = 0;
+
 for (cardName of cardNames) {
+  idCounter += 1;
   const deck = document.getElementsByClassName('deck')[0];
   const icon = document.createElement('i');
   icon.classList.add('fa', cardName);
   const listElement = document.createElement('li');
   listElement.appendChild(icon);
   listElement.classList.add('card');
+  listElement.setAttribute('id', idCounter);
   deck.appendChild(listElement);
 
   //deck.appendChild(karten in form von list items - in list items ein i tag)
@@ -50,8 +55,6 @@ for (cardName of cardNames) {
   console.log('symbol');
   */
 }
-
-
 
 let openCards = [];
 // array where currently open cards are stored
@@ -73,6 +76,15 @@ function resetOpenCards() {
 }
 
 function click (card, ) {
+  // check if the same card is clicked twice
+  if (openCards.length > 0) {
+    let firstCardId = openCards[0].getAttribute('id');
+    let secondCardId = card.getAttribute('id');
+    if (firstCardId === secondCardId) {
+      return;
+    }
+  }
+
   // user has clicked on one of the cards
   if (openCards.length < 2) {
     openCards.push(card);
