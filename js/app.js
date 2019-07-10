@@ -2,6 +2,30 @@
  * Create a list that holds all of your cards
  */
 
+ const cardNames = [
+   'fa-diamond', 'fa-diamond',
+   'fa-bomb', 'fa-bomb',
+   'fa-paper-plane-o', 'fa-paper-plane-o',
+   'fa-anchor', 'fa-anchor',
+   'fa-bolt', 'fa-bolt',
+   'fa-cube', 'fa-cube',
+   'fa-leaf', 'fa-leaf',
+   'fa-bicycle', 'fa-bicycle'
+ ];
+
+ function shuffle(array) {
+     var currentIndex = array.length, temporaryValue, randomIndex;
+     while (currentIndex !== 0) {
+         randomIndex = Math.floor(Math.random() * currentIndex);
+         currentIndex -= 1;
+         temporaryValue = array[currentIndex];
+         array[currentIndex] = array[randomIndex];
+         array[randomIndex] = temporaryValue;
+     }
+     return array;
+ }
+
+ shuffle(cardNames);
 
 /*
  * Display the cards on the page
@@ -10,68 +34,89 @@
  *   - add each card's HTML to the page
  */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+for (cardName of cardNames) {
+  const deck = document.getElementsByClassName('deck')[0];
+  const icon = document.createElement('i');
+  icon.classList.add('fa', cardName);
+  const listElement = document.createElement('li');
+  listElement.appendChild(icon);
+  listElement.classList.add('card');
+  deck.appendChild(listElement);
 
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
+  //deck.appendChild(karten in form von list items - in list items ein i tag)
 
-    return array;
+  /*let symbol = .createElement('li');
+  document.getElementByClassName('')
+  console.log('symbol');
+  */
 }
 
+
+
 let openCards = [];
-// array where open cards are stored
+// array where currently open cards are stored
+
+let matchedCards = [];
+// array where all matched cards are stored
 
 const cards = document.querySelectorAll('.card');
 // all cards in a variable
 
-for (let card of cards) {
-  card.addEventListener('click', function () {
-      // user has clicked on one of the cards
-      openCards.push(card);
-      card.classList.add('open', 'show');
-      // card was pushed in openCards array and card was opened
-      if (openCards.length === 2) {
-        // 2 cards are already opened
-        let firstCard = openCards[0].querySelector('i').classList.item(1);
-        let secondCard = openCards[1].querySelector('i').classList.item(1);
-        // card content put in a variable
-        if (firstCard === secondCard) {
-          // both cards match
-          openCards[0].classList.add('match');
-          openCards[1].classList.add('match');
-          }
+let timeoutID;
 
-        else {
-          // cards are NOT matching
-          setTimeout(function() {
+function resetOpenCards() {
+  for (let openCard of openCards) {
+    openCard.classList.remove('open', 'show')
+    openCards = [];
+    // close cards and empty array of openCards
+  }
+}
+
+function click (card, ) {
+  // user has clicked on one of the cards
+  if (openCards.length < 2) {
+    openCards.push(card);
+    card.classList.add('open', 'show');
+    // card was pushed in openCards array and card was opened
+    if (openCards.length === 2) {
+      // 2 cards are already opened
+      let firstCard = openCards[0].querySelector('i').classList.item(1);
+      let secondCard = openCards[1].querySelector('i').classList.item(1);
+      // card content put in a variable
+      if (firstCard === secondCard) {
+        // both cards match
+        openCards[0].classList.add('match');
+        openCards[1].classList.add('match');
+        matchedCards.push(firstCard, secondCard);
+        openCards = [];
+        // check if all cards are matched
+        if (matchedCards.length === 16){
+          // winning screen
+          console.log('Game Over');
+        }
+      }
+      else {
+        // cards are NOT matching
+         timeoutID = setTimeout(function() {
           // delay the closing of the cards
-          for (let openCard of openCards) {
-            console.log('else fired');
-            openCard.classList.remove('open', 'show')
-            openCards = [];
-            // close cards and empty array of openCards
-              }
-            }, 1000);
-          }
-        }
-        else {
+          resetOpenCards();
+        }, 1000);
+      }
+    }
+  }
+  else {
+    clearTimeout(timeoutID);
+    resetOpenCards();
+    openCards.push(card);
+    card.classList.add('open', 'show');
+  }
+}
 
-        }
-      });
-    };
-/*
-when player clicks a card => check if nr of open cards is less than 2
-  if true = open card - if false = close all open cards and empty array
+for (let card of cards) {
+  card.addEventListener('click', function() {click(card)});
+  // function passes card into the click function
+}
 
-
-*/
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
