@@ -1,7 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
-
+ // all cards stored in an array
  const cardNames = [
    'fa-diamond', 'fa-diamond',
    'fa-bomb', 'fa-bomb',
@@ -24,36 +21,23 @@
      }
      return array;
  }
-
+ // shuffle function to randomly generate order of cards
  shuffle(cardNames);
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
-
+// variable with initial id count
 let idCounter = 0;
 
 for (cardName of cardNames) {
-  idCounter += 1;
+  idCounter += 1; // give different id number to every card
   const deck = document.getElementsByClassName('deck')[0];
   const icon = document.createElement('i');
-  icon.classList.add('fa', cardName);
+  icon.classList.add('fa', cardName); // add complete name of the class
   const listElement = document.createElement('li');
   listElement.appendChild(icon);
-  listElement.classList.add('card');
-  listElement.setAttribute('id', idCounter);
-  deck.appendChild(listElement);
-
-  //deck.appendChild(karten in form von list items - in list items ein i tag)
-
-  /*let symbol = .createElement('li');
-  document.getElementByClassName('')
-  console.log('symbol');
-  */
+  listElement.classList.add('card'); // add class card to all cards
+  listElement.setAttribute('id', idCounter); // give all cards an id
+  deck.appendChild(listElement); // add complete elements to the deck
 }
 
 let openCards = [];
@@ -66,6 +50,7 @@ const cards = document.querySelectorAll('.card');
 // all cards in a variable
 
 let timeoutID;
+// make a global timeoutID varibale to assign an ID later on
 
 function resetOpenCards() {
   for (let openCard of openCards) {
@@ -128,12 +113,8 @@ for (let card of cards) {
   card.addEventListener('click', function() {click(card)});
   // function passes card into the click function
 }
-
 /*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
