@@ -28,9 +28,11 @@
 // variable with initial id count
 let idCounter = 0;
 
+// the entire deck
+const deck = document.querySelector('.deck');
+
 for (cardName of cardNames) {
   idCounter += 1; // give different id number to every card
-  const deck = document.getElementsByClassName('deck')[0];
   const icon = document.createElement('i');
   icon.classList.add('fa', cardName); // add complete name of the class
   const listElement = document.createElement('li');
@@ -52,6 +54,10 @@ const cards = document.querySelectorAll('.card');
 let timeoutID;
 // make a global timeoutID varibale to assign an ID later on
 
+let allClicks = 0;
+// click counter variable
+
+
 function resetOpenCards() {
   for (let openCard of openCards) {
     openCard.classList.remove('open', 'show')
@@ -60,7 +66,7 @@ function resetOpenCards() {
   }
 }
 
-function click (card, ) {
+function click (card) {
   // check if the same card is clicked twice
   if (openCards.length > 0) {
     let firstCardId = openCards[0].getAttribute('id');
@@ -76,6 +82,8 @@ function click (card, ) {
     card.classList.add('open', 'show');
     // card was pushed in openCards array and card was opened
     if (openCards.length === 2) {
+      // count the click
+      moveCounter();
       // 2 cards are already opened
       let firstCard = openCards[0].querySelector('i').classList.item(1);
       let secondCard = openCards[1].querySelector('i').classList.item(1);
@@ -97,7 +105,7 @@ function click (card, ) {
          timeoutID = setTimeout(function() {
           // delay the closing of the cards
           resetOpenCards();
-        }, 1000);
+        }, 3000);
       }
     }
   }
@@ -113,8 +121,24 @@ for (let card of cards) {
   card.addEventListener('click', function() {click(card)});
   // function passes card into the click function
 }
+
+const restart = document.querySelector('.fa-repeat');
+
+restart.addEventListener('click', function() {
+  console.log('event listener fired');
+  openCards = [];
+  matchedCards = [];
+  shuffle(cardNames);
+});
+
+function moveCounter() {
+  allClicks +=1;
+  document.getElementsByClassName('moves')[0].innerText = allClicks;
+};
+
+
 /*
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *    - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
