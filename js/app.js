@@ -66,6 +66,9 @@ function resetOpenCards() {
   }
 }
 
+let firstStar = document.querySelector('.stars');
+
+
 function click (card) {
   // check if the same card is clicked twice
   if (openCards.length > 0) {
@@ -82,6 +85,16 @@ function click (card) {
     card.classList.add('open', 'show');
     // card was pushed in openCards array and card was opened
     if (openCards.length === 2) {
+      // check for star rating threshholds
+      if (allClicks > 9) {
+        document.querySelectorAll('.fa-star')[2].classList.add('fa-star-o');
+      }
+      if (allClicks > 14) {
+        document.querySelectorAll('.fa-star')[1].classList.add('fa-star-o');
+      }
+      if (allClicks > 18) {
+        document.querySelectorAll('.fa-star')[0].classList.add('fa-star-o');
+      }
       // count the click
       moveCounter();
       // 2 cards are already opened
@@ -105,7 +118,7 @@ function click (card) {
          timeoutID = setTimeout(function() {
           // delay the closing of the cards
           resetOpenCards();
-        }, 3000);
+        }, 1000);
       }
     }
   }
@@ -124,11 +137,24 @@ for (let card of cards) {
 
 const restart = document.querySelector('.fa-repeat');
 
-restart.addEventListener('click', function() {
-  console.log('event listener fired');
+function newGame() {
   openCards = [];
   matchedCards = [];
   shuffle(cardNames);
+  for (cardName of cardNames) {
+    idCounter += 1; // give different id number to every card
+    const icon = document.createElement('i');
+    icon.classList.add('fa', cardName); // add complete name of the class
+    const listElement = document.createElement('li');
+    listElement.appendChild(icon);
+    listElement.classList.add('card'); // add class card to all cards
+    listElement.setAttribute('id', idCounter); // give all cards an id
+    deck.appendChild(listElement); // add complete elements to the deck
+  }
+};
+
+restart.addEventListener('click', function() {
+  newGame();
 });
 
 function moveCounter() {
