@@ -1,14 +1,31 @@
- // all cards stored in an array
- const cardNames = [
-   'fa-diamond', 'fa-diamond',
-   'fa-bomb', 'fa-bomb',
-   'fa-paper-plane-o', 'fa-paper-plane-o',
-   'fa-anchor', 'fa-anchor',
-   'fa-bolt', 'fa-bolt',
-   'fa-cube', 'fa-cube',
-   'fa-leaf', 'fa-leaf',
-   'fa-bicycle', 'fa-bicycle'
- ];
+const cardNames = [
+  'fa-diamond', 'fa-diamond',
+  'fa-bomb', 'fa-bomb',
+  'fa-paper-plane-o', 'fa-paper-plane-o',
+  'fa-anchor', 'fa-anchor',
+  'fa-bolt', 'fa-bolt',
+  'fa-cube', 'fa-cube',
+  'fa-leaf', 'fa-leaf',
+  'fa-bicycle', 'fa-bicycle'
+];
+
+const deck = document.querySelector('.deck');
+// the entire deck
+
+let openCards;
+// array where currently open cards are stored
+
+let matchedCards;
+// array where all matched cards are stored
+
+let timeoutID;
+// make a global timeoutID varibale to assign an ID later on
+
+let allClicks;
+// click counter variable
+
+let idCounter = 0;
+// variable with initial id count
 
  function shuffle(array) {
      var currentIndex = array.length, temporaryValue, randomIndex;
@@ -21,42 +38,6 @@
      }
      return array;
  }
- // shuffle function to randomly generate order of cards
- shuffle(cardNames);
-
-
-// variable with initial id count
-let idCounter = 0;
-
-// the entire deck
-const deck = document.querySelector('.deck');
-
-for (cardName of cardNames) {
-  idCounter += 1; // give different id number to every card
-  const icon = document.createElement('i');
-  icon.classList.add('fa', cardName); // add complete name of the class
-  const listElement = document.createElement('li');
-  listElement.appendChild(icon);
-  listElement.classList.add('card'); // add class card to all cards
-  listElement.setAttribute('id', idCounter); // give all cards an id
-  deck.appendChild(listElement); // add complete elements to the deck
-}
-
-let openCards = [];
-// array where currently open cards are stored
-
-let matchedCards = [];
-// array where all matched cards are stored
-
-const cards = document.querySelectorAll('.card');
-// all cards in a variable
-
-let timeoutID;
-// make a global timeoutID varibale to assign an ID later on
-
-let allClicks = 0;
-// click counter variable
-
 
 function resetOpenCards() {
   for (let openCard of openCards) {
@@ -66,10 +47,8 @@ function resetOpenCards() {
   }
 }
 
-let firstStar = document.querySelector('.stars');
-
-
 function click (card) {
+  console.log('click fired');
   // check if the same card is clicked twice
   if (openCards.length > 0) {
     let firstCardId = openCards[0].getAttribute('id');
@@ -86,13 +65,13 @@ function click (card) {
     // card was pushed in openCards array and card was opened
     if (openCards.length === 2) {
       // check for star rating threshholds
-      if (allClicks > 9) {
+      if (allClicks > 11) {
         document.querySelectorAll('.fa-star')[2].classList.add('fa-star-o');
       }
-      if (allClicks > 14) {
+      if (allClicks > 19) {
         document.querySelectorAll('.fa-star')[1].classList.add('fa-star-o');
       }
-      if (allClicks > 18) {
+      if (allClicks > 25) {
         document.querySelectorAll('.fa-star')[0].classList.add('fa-star-o');
       }
       // count the click
@@ -130,16 +109,26 @@ function click (card) {
   }
 }
 
-for (let card of cards) {
-  card.addEventListener('click', function() {click(card)});
-  // function passes card into the click function
-}
+function addClicks(cards) {
+  for (let card of cards) {
+    card.addEventListener('click', function() {click(card)});
+    // function passes card into the click function
+  }
+};
 
 const restart = document.querySelector('.fa-repeat');
 
 function newGame() {
+  allListItems = document.querySelector('.deck');
+  allListItems.innerHTML = '';
   openCards = [];
+  idCounter = 0;
   matchedCards = [];
+  allClicks = 0;
+  document.querySelectorAll('.fa-star').forEach(function(star) {
+    star.classList.remove('fa-star-o');
+  });
+  document.getElementsByClassName('moves')[0].innerText = 0;
   shuffle(cardNames);
   for (cardName of cardNames) {
     idCounter += 1; // give different id number to every card
@@ -150,18 +139,25 @@ function newGame() {
     listElement.classList.add('card'); // add class card to all cards
     listElement.setAttribute('id', idCounter); // give all cards an id
     deck.appendChild(listElement); // add complete elements to the deck
+    console.log('bastelt die karte');
   }
+  const cards = document.querySelectorAll('.card');
+  // all cards in a variable
+  addClicks(cards);
 };
 
 restart.addEventListener('click', function() {
+  // restart the game
   newGame();
 });
 
 function moveCounter() {
+  // count the player moves
   allClicks +=1;
   document.getElementsByClassName('moves')[0].innerText = allClicks;
 };
 
+newGame();
 
 /*
  *    - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
