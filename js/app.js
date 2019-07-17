@@ -30,6 +30,18 @@ let allClicks;
 // interval variable to store and cancel timer
 let intervalID;
 
+// star rating in numbers
+let starRating = 3;
+
+// the winning screen popup/modal
+const modal = document.getElementById('winningScreen');
+
+// repeat button in-game
+const restart = document.querySelector('.fa-repeat');
+
+// repeat button on winning-screen
+const winningScreenRestart = document.querySelector('.restartButton');
+
 // timer while game is running
 let displayTimer = 0;
 
@@ -69,7 +81,8 @@ function matchCards (firstCard, secondCard) {
   // check if all cards are matched
   if (matchedCards.length === 16){
     // winning screen
-    gameEnd();
+    timeoutID = setTimeout(function() {
+    gameEnd();}, 1000);
   }
 };
 
@@ -102,13 +115,16 @@ function click (card) {
     if (openCards.length === 2) {
       // two cards are open
       // check for star rating threshholds
-      if (allClicks > 11) {
+      if (allClicks === 12) {
         document.querySelectorAll('.fa-star')[2].classList.add('fa-star-o');
+        starRating -= 1;
       }
-      if (allClicks > 19) {
+      if (allClicks === 20) {
         document.querySelectorAll('.fa-star')[1].classList.add('fa-star-o');
+        starRating -= 1;
       }
-      if (allClicks > 25) {
+      if (allClicks === 26) {
+        starRating -= 1;
         document.querySelectorAll('.fa-star')[0].classList.add('fa-star-o');
       }
       // count the click
@@ -147,12 +163,11 @@ function addClicks(cards) {
 function raiseMoveCounter() {
   // count the player moves
   allClicks +=1;
-  document.getElementsByClassName('moves')[0].innerText = allClicks;
+  document.getElementsByClassName('moves')[1].innerText = allClicks;
 };
 
-const restart = document.querySelector('.fa-repeat');
-
 function startNewGame() {
+  // empty all arrays and reset
   allListItems = document.querySelector('.deck');
   allListItems.innerHTML = '';
   displayTimer = 0;
@@ -161,12 +176,15 @@ function startNewGame() {
   idCounter = 0;
   matchedCards = [];
   allClicks = 0;
+  // clear moves counter and star rating
   document.getElementsByClassName('moves')[0].innerText = 0;
+  document.getElementsByClassName('moves')[1].innerText = 0;
   document.querySelectorAll('.fa-star').forEach(function(star) {
     star.classList.remove('fa-star-o');
   });
   shuffle(cardNames);
   for (cardName of cardNames) {
+    // iterate over every card and add all atributes
     idCounter += 1; // give different id number to every card
     const icon = document.createElement('i');
     icon.classList.add('fa', cardName); // add complete name of the class
@@ -183,18 +201,27 @@ function startNewGame() {
 
 function gameEnd() {
   // all cards have been matched and game ends
+  document.querySelector('.rating').innerText = starRating;
+  document.getElementsByClassName('moves')[0].innerText = allClicks;
+  document.querySelector('.seconds').innerText = displayTimer;
   clearInterval(intervalID);
-  console.log('Game Over');
+  modal.style.display = "block";
 };
 
 // click listener on restart button
 restart.addEventListener('click', function() {
+  gameStarted = false;
+  clearInterval(intervalID);
   // restart the game
   startNewGame();
 });
 
-startNewGame();
+winningScreenRestart.addEventListener('click', function() {
+  // click listener on restartButton
+  // get rid of the winning screen
+  modal.style.display = "none";
+  gameStarted = false;
+  startNewGame();
+});
 
-/*
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
+startNewGame();

@@ -107,3 +107,35 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.modal {
+  /* the default modal, when its in the background */
+  display: none;
+  background-image: linear-gradient(#ffffff, #8a868c);
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content {
+  text-align: center;
+}
+
+.modal-text {
+  font-size: 30px;
+  margin-top: 0;
+  padding-top: 400px;
+}
+
+.restartButton {
+  font-size: 30px;
+  color: #ffffff;
+  background-color: #61b085;
+  border-radius: 10px;
+  border-width: 0;
+}
+
+.whoa {
+  height: 166.5px;
+  width: 283px;
+  margin: 20px;
+}
