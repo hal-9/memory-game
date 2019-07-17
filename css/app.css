@@ -115,7 +115,7 @@ h1 {
 
 .modal {
   /* the default modal, when its in the background */
-  display: block;
+  display: none;
   background-image: linear-gradient(#ffffff, #8a868c);
   width: 100%;
   height: 100%;
