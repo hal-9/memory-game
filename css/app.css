@@ -115,7 +115,7 @@ h1 {
 
 .modal {
   /* the default modal, when its in the background */
-  display: none;
+  display: block;
   background-image: linear-gradient(#ffffff, #8a868c);
   width: 100%;
   height: 100%;
@@ -126,9 +126,9 @@ h1 {
 }
 
 .modal-text {
-  font-size: 30px;
+  font-size: 27px;
   margin-top: 0;
-  padding-top: 400px;
+  padding-top: 100px;
 }
 
 .restartButton {
@@ -152,6 +152,14 @@ h1 {
 }
 
 @media screen and (min-width: 768px) {
+  .whoa {
+    margin: 50px;
+    width: 566px;
+    height: 333px;
+  }
+  .modal-text {
+    font-size: 50px;
+  }
   .container {
     width: 768px;
   }
