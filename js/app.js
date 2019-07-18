@@ -176,6 +176,7 @@ function startNewGame() {
   idCounter = 0;
   matchedCards = [];
   allClicks = 0;
+  starRating = 3;
   // clear moves counter and star rating
   document.getElementsByClassName('moves')[0].innerText = 0;
   document.getElementsByClassName('moves')[1].innerText = 0;
