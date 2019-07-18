@@ -163,7 +163,7 @@ function addClicks(cards) {
 function raiseMoveCounter() {
   // count the player moves
   allClicks +=1;
-  document.getElementsByClassName('moves')[1].innerText = allClicks;
+  document.getElementsByClassName('moves')[0].innerText = allClicks;
 };
 
 function startNewGame() {
@@ -178,8 +178,8 @@ function startNewGame() {
   allClicks = 0;
   starRating = 3;
   // clear moves counter and star rating
-  document.getElementsByClassName('moves')[0].innerText = 0;
   document.getElementsByClassName('moves')[1].innerText = 0;
+  document.getElementsByClassName('moves')[0].innerText = 0;
   document.querySelectorAll('.fa-star').forEach(function(star) {
     star.classList.remove('fa-star-o');
   });
@@ -203,7 +203,7 @@ function startNewGame() {
 function gameEnd() {
   // all cards have been matched and game ends
   document.querySelector('.rating').innerText = starRating;
-  document.getElementsByClassName('moves')[0].innerText = allClicks;
+  document.getElementsByClassName('moves')[1].innerText = allClicks;
   document.querySelector('.seconds').innerText = displayTimer;
   clearInterval(intervalID);
   modal.style.display = "block";
