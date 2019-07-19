@@ -1,4 +1,4 @@
-# memory-Game
+# memory game
 **memory game project for the front-end web developer nanodegree at udacity**
 
 ## features: 
