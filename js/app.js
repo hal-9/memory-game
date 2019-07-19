@@ -1,13 +1,5 @@
-const cardNames = [
-  'fa-diamond', 'fa-diamond',
-  'fa-bomb', 'fa-bomb',
-  'fa-paper-plane-o', 'fa-paper-plane-o',
-  'fa-anchor', 'fa-anchor',
-  'fa-bolt', 'fa-bolt',
-  'fa-cube', 'fa-cube',
-  'fa-leaf', 'fa-leaf',
-  'fa-bicycle', 'fa-bicycle'
-];
+let icons = ['fa-diamond', 'fa-bomb', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt', 'fa-cube', 'fa-leaf', 'fa-bicycle'];
+let symbols = [...icons, ...icons];
 
 // the entire deck
 const deck = document.querySelector('.deck');
@@ -49,7 +41,7 @@ let displayTimer = 0;
 let idCounter = 0;
 
 function shuffle(array) {
-   var currentIndex = array.length, temporaryValue, randomIndex;
+   let currentIndex = array.length, temporaryValue, randomIndex;
    while (currentIndex !== 0) {
        randomIndex = Math.floor(Math.random() * currentIndex);
        currentIndex -= 1;
@@ -115,17 +107,13 @@ function click (card) {
     if (openCards.length === 2) {
       // two cards are open
       // check for star rating threshholds
-      if (allClicks === 12) {
+      if (allClicks === 14) {
         document.querySelectorAll('.fa-star')[2].classList.add('fa-star-o');
         starRating -= 1;
       }
-      if (allClicks === 20) {
+      if (allClicks === 22) {
         document.querySelectorAll('.fa-star')[1].classList.add('fa-star-o');
         starRating -= 1;
-      }
-      if (allClicks === 26) {
-        starRating -= 1;
-        document.querySelectorAll('.fa-star')[0].classList.add('fa-star-o');
       }
       // count the click
       raiseMoveCounter();
@@ -183,12 +171,12 @@ function startNewGame() {
   document.querySelectorAll('.fa-star').forEach(function(star) {
     star.classList.remove('fa-star-o');
   });
-  shuffle(cardNames);
-  for (cardName of cardNames) {
+  shuffle(symbols);
+  for (symbol of symbols) {
     // iterate over every card and add all atributes
     idCounter += 1; // give different id number to every card
     const icon = document.createElement('i');
-    icon.classList.add('fa', cardName); // add complete name of the class
+    icon.classList.add('fa', symbol); // add complete name of the class
     const listElement = document.createElement('li');
     listElement.appendChild(icon);
     listElement.classList.add('card'); // add class card to all cards
