@@ -3,7 +3,7 @@
 
 ## Instructions
 
-You can either visit the page here https://tunikb.github.io/memory-game/ or clone/download a local version to your computer to run it by opening the index.html file in your browser.
+You can either visit the page here https://hal-9.github.io/memory-game/ or clone/download a local version to your computer to run it by opening the index.html file in your browser.
 
 ## Features
 
